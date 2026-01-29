@@ -1,0 +1,7 @@
+@config "tailwind.config.ts";
+
+@import "tailwindcss" source("src");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

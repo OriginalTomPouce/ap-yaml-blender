@@ -1,0 +1,20 @@
+@import "tailwindcss" source("components");
+@import "tailwindcss" source("components/gamedata");
+
+@source inline("bg-gray-800");
+@source inline("flex");
+@source inline("flex-col");
+@source inline("place-self-center");
+@source inline("fixed");
+@source inline("top-0");
+@source inline("bottom-0");
+@source inline("left-0");
+@source inline("right-0");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@theme {
+    --text-tiny: 0.7em;
+}

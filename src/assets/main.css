@@ -1,0 +1,35 @@
+@import './base.css';
+
+.green {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1);
+  transition: 0.4s;
+}
+
+max-h-screen {
+    max-height: 100vh;
+}
+
+.iconbar-S img {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+    margin-right: 4px;
+    display: inline-block;
+}
+
+.iconbar-M img {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+    margin-right: 4px;
+    display: inline-block;
+}
+
+.iconbar-L img {
+    width: 24px;
+    height: 24px;
+    margin-right: 4px;
+    margin-right: 4px;
+    display: inline-block;
+}
