@@ -182,11 +182,15 @@
 
                 for (var x = 0; x < this.masterFile.triggers.length; x++) {
                     if (this.masterFile.triggers[x].option_name == 'game' && this.masterFile.triggers[x].option_result == game) {
-                        this.masterFile.triggers[x].options[""].name = name;
+                        if (this.masterFile.triggers[x].options['null'])
+                            this.masterFile.triggers[x].options['null'].name = name;
+                        else if (this.masterFile.triggers[x].options[""])
+                            this.masterFile.triggers[x].options[""].name = name;
+                        
                         return;
                     }
                 }
-                this.masterFile.triggers.push({ 'option_name': 'game', 'option_result': game, 'options': { "": { 'name': name } } });
+                this.masterFile.triggers.push({ 'option_name': 'game', 'option_result': game, 'options': { 'null' : { 'name': name } } });
                 console.log(this.masterFile.triggers);
 
             },
@@ -195,6 +199,8 @@
                     return null;
                 for (var x = 0; x < yaml.triggers.length; x++) {
                     if (yaml.triggers[x].option_name == 'game' && yaml.triggers[x].option_result == game) {
+                        if (yaml.triggers[x].options['null'])
+                            return yaml.triggers[x].options['null'].name = name;
                         return yaml.triggers[x].options[""].name;
                     }
                 }
