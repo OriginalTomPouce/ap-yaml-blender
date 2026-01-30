@@ -200,7 +200,7 @@
                 for (var x = 0; x < yaml.triggers.length; x++) {
                     if (yaml.triggers[x].option_name == 'game' && yaml.triggers[x].option_result == game) {
                         if (yaml.triggers[x].options['null'])
-                            return yaml.triggers[x].options['null'].name = name;
+                            return yaml.triggers[x].options['null'].name;
                         return yaml.triggers[x].options[""].name;
                     }
                 }
