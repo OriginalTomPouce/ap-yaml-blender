@@ -1,15 +1,21 @@
 <template>
     <div class="text-center text-white">
-        <h1 class="text-2xl my-4">AP Yaml Blender</h1>
-        <div class="mt-4 mb-10 p-6 w-full xl:w-1/2 align-top inline-block">
-
-            <label for="file" class="dropzone-container rounded-md border-1 border-gray-500 h-10 w-80 px-10 py-4 hover:bg-emerald-800" :class="{ isDragging : 'bg-emerald-800'}"
-                 @dragover="dragover"
-                 @dragleave="dragleave"
-                 @drop="drop">
-                Drop your YAML here (or click here)
-            </label>
-            <input type="file" multiple accept=".yaml" id="file" v-on:change="uploadFile" class="hidden" />
+        <h1 class="text-4xl my-4">AP Yaml Blender</h1>
+        <div class="mt-4 p-6 w-full xl:w-1/2 align-top inline-block">
+            <div class="mb-20">
+                An application to make your random YAML, so you don't have to edit a big file again and again.<br />
+                Put any kind of YAML you want to the blender, either a single game or an already made random yaml.<br/>
+                Then you can update it by adding more yamls ! (or remove games)<br />
+            </div>
+            <div>
+                <label for="file" class="dropzone-container rounded-md border-2 border-gray-500 h-10 w-80 px-18 py-8 bg-gray-900 hover:bg-emerald-800" :class="{ isDragging : 'bg-emerald-800'}"
+                       @dragover="dragover"
+                       @dragleave="dragleave"
+                       @drop="drop">
+                    Drop your YAML here (or click here)
+                </label>
+                <input type="file" multiple accept=".yaml" id="file" v-on:change="uploadFile" class="hidden" />
+            </div>
             <div class="mt-10"></div>
         </div>
         <div v-if="fileValid()" class="inline-block w-full xl:w-1/2 p-6 align-top">
@@ -41,16 +47,17 @@
                 </table>
             </div>
         </div>
-        <div v-if="fileValid()" class="mt-4 mb-10 p-6 w-full align-top inline-block">
+        <div v-if="fileValid()" class="mt-4 p-6 w-full align-top inline-block">
             <input @click="download()" type="submit" class="bg-blue-800 p-4 px-8 br-1 rounded-md text-lg cursor-pointer" value="Download" />
         </div>
         <div class="p-6 align-top">
-            <a href="https://github.com/OriginalTomPouce/ap-yaml-blender" target="_blank" class="cursor-pointer text-green-400 hover:text-white hover:underline">Github page</a>
+            <a href="https://github.com/OriginalTomPouce/ap-yaml-blender" target="_blank" class="cursor-pointer text-green-400 hover:text-white hover:underline">v{{ANAP_CONFIG.APP_VERSION}} - Github page</a>
         </div>
     </div>
 </template>
 
 <script>
+    import ANAP_CONFIG from "../anapconfig.js";
     import yaml from 'js-yaml';
     import { saveAs } from 'file-saver';
 
@@ -61,6 +68,7 @@
         data: function (
         ) {
             return {
+                ANAP_CONFIG,
                 error: 0,
                 files: [],
                 games: [],
@@ -73,6 +81,12 @@
             fileValid: function () {
                 if (this.masterFile && this.games.length)
                     return true;
+                return false;
+            },
+            inputValid: function (yaml) {
+                if (yaml.hasOwnProperty('game') && yaml.hasOwnProperty('name')) {
+                    return true;
+                }
                 return false;
             },
             changeYamlName: function () {
@@ -232,7 +246,10 @@
             },
             parseFile: function (file) {
                 var tes = yaml.load(file);
-                console.log(tes);
+
+                if (!this.inputValid(tes)) {
+                    return;
+                }
                 if (this.masterFile == null) {
                     this.buildMasterFile(tes);
                 }

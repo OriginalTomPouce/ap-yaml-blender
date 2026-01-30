@@ -4,9 +4,6 @@
     <div class="relative h-screen">
         <div class="flex flex-col">
             <div>
-                <Navbar v-bind:gamedata="DATA_PACKAGE"></Navbar>
-            </div>
-            <div>
                 <Home></Home>
             </div>
         </div>
