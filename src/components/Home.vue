@@ -32,6 +32,7 @@
                             <th class="w-60">Game</th>
                             <th class="w-60">Slot name</th>
                             <th class="w-20">Weight</th>
+                            <th class="w-20">Prob</th>
                             <th class="w-20">Action</th>
                         </tr>
                     </thead>
@@ -41,6 +42,7 @@
                             <td class="p-1">{{ element.game_name }}</td>
                             <td class="p-1"><input class="border-1 border-gray-700 p-2 rounded-sm" type="text" v-model="element.slot_name" /></td>
                             <td class="p-1"><input class="border-1 border-gray-700 p-2" type="number" min=0 max=100 v-model="element.weight" /></td>
+                            <td class="p-1"><span>{{ probability(element.weight)}} %</span></td>
                             <td class="p-1"><b class="inline-block cursor-pointer text-red-400 border-1 rounded-md px-3 py-1" @click="deleteGame(element.game_name)">X</b></td>
                         </tr>
                     </tbody>
@@ -89,6 +91,15 @@
                 }
                 return false;
             },
+            probability: function (num) {
+                var total = 0;
+                for (var x = 0; x < this.games.length; x++) {
+                    total += this.games[x].weight;
+                }
+                if (!total)
+                    total = 1;
+                return (Math.floor(num * 1000 / total) / 10);
+            },
             changeYamlName: function () {
                 if (this.masterFile)
                     this.masterFile.name = this.yaml_name;
@@ -116,6 +127,7 @@
                         delete this.masterFile[game];
                         for (var y = 0; y < this.masterFile.triggers.length; y++) {
                             if (this.masterFile.triggers[y].option_name == 'game' && this.masterFile.triggers[y].option_result == game) {
+                                this.$parent.toasOasIOAST('Removed : ' + game, 'warn');
                                 this.masterFile.triggers.splice(y, 1);
                                 break;
                             }
@@ -128,6 +140,10 @@
             saveParams: function () {
                 this.name = this.yaml_name;
                 for (var x = 0; x < this.games.length; x++) {
+                    // Safety
+                    if (!this.games[x].weight)
+                        this.games[x].weight = 0;
+
                     this.masterFile.game[this.games[x].game_name] = this.games[x].weight; 
                     this.addTriggerGameName(this.games[x].game_name, this.games[x].slot_name);
                 }
@@ -190,12 +206,14 @@
                 }
                 for (var x = 0; x < this.games.length; x++) {
                     if (this.games[x].game_name == game) {
-                        this.games[x].slot_name = name;
-                        this.games[x].weight = weight;
+                        this.$parent.toasOasIOAST(game + ' got updated', 'info');
+                        //this.games[x].slot_name = name;
+                        //this.games[x].weight = weight;
                         return;
                     }
                 }
                 this.games.push({ 'game_name': game, 'slot_name': name, 'weight': weight });
+                this.$parent.toasOasIOAST('Added a new game : ' + game, 'success');
             },
             buildMasterFile: function (yaml) {
                 this.masterFile = yaml;
@@ -248,6 +266,7 @@
                 var tes = yaml.load(file);
 
                 if (!this.inputValid(tes)) {
+                    this.$parent.toasOasIOAST('YAML File is invalid (sorry) ', 'error');
                     return;
                 }
                 if (this.masterFile == null) {
@@ -283,6 +302,7 @@
                     type: "text/plain;charset=utf-8;",
                 });
                 saveAs(blob, this.masterFile.name + '.yaml');
+                this.$parent.toasOasIOAST('VRRRRRRRRRRR', 'success');
             },
             dragover(e) {
                 e.preventDefault();

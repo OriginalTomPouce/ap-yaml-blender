@@ -33,3 +33,7 @@ max-h-screen {
     margin-right: 4px;
     display: inline-block;
 }
+
+span.p-toast-summary {
+    font-size: 12px;
+}

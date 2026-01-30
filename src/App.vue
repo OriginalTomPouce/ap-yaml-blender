@@ -31,6 +31,12 @@
         },
 
         methods: {
+            toasOasIOAST: function (message, category) {
+                if (category == null)
+                    category = 'info';
+
+                this.$toast.add({ summary: message, severity: category, life: 8000 });
+            }
         },
         components: {
             Navbar,
