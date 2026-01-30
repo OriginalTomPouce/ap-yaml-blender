@@ -1,7 +1,7 @@
 <template>
-    <div class="text-center text-white">
+    <div class="text-center text-white flex flex-col items-center">
         <h1 class="text-4xl my-4">AP Yaml Blender</h1>
-        <div class="mt-4 p-6 w-full xl:w-1/2 align-top inline-block">
+        <div class="mt-4 p-6 w-200 align-top inline-block border-1 border-gray-700 p-2">
             <div class="mb-20">
                 An application to make your random YAML, so you don't have to edit a big file again and again.<br />
                 Put any kind of YAML you want to the blender, either a single game or an already made random yaml.<br/>
@@ -18,36 +18,36 @@
             </div>
             <div class="mt-10"></div>
         </div>
-        <div v-if="fileValid()" class="inline-block w-full xl:w-1/2 p-6 align-top">
+        <div v-if="fileValid()" class="inline-block w-200 p-6 align-top border-1 border-gray-700 p-2">
             <div class="text-xl">
                 <b>YAML Name :</b> <input type="text" class="border-1 border-gray-700 p-1" v-model="yaml_name" @change="changeYamlName()" />
             </div>
-            <div>
+            <div class="mt-6">
                 You have <b>{{ getRandomCount() }}</b> games.
             </div>
             <div>
-                <table class="w-full">
+                <table>
                     <thead>
                         <tr>
-                            <th class="w-120">Game</th>
-                            <th class="w-80">Slot name</th>
-                            <th class="w-80">Weight</th>
-                            <th class="w-40">Action</th>
+                            <th class="w-60">Game</th>
+                            <th class="w-60">Slot name</th>
+                            <th class="w-20">Weight</th>
+                            <th class="w-20">Action</th>
                         </tr>
                     </thead>
                     <tbody>
 
                         <tr v-for="(element, index) in games">
-                            <td class="w-120 p-1">{{ element.game_name }}</td>
-                            <td class="w-80 p-1"><input class="border-1 border-gray-700 p-2 rounded-sm" type="text" v-model="element.slot_name" /></td>
-                            <td class="w-80 p-1"><input class="border-1 border-gray-700 p-2" type="number" min=0 max=100 v-model="element.weight" /></td>
-                            <td class="w-40 p-1"><b class="inline-block cursor-pointer text-red-400 border-1 rounded-md px-3 py-1" @click="deleteGame(element.game_name)">X</b></td>
+                            <td class="p-1">{{ element.game_name }}</td>
+                            <td class="p-1"><input class="border-1 border-gray-700 p-2 rounded-sm" type="text" v-model="element.slot_name" /></td>
+                            <td class="p-1"><input class="border-1 border-gray-700 p-2" type="number" min=0 max=100 v-model="element.weight" /></td>
+                            <td class="p-1"><b class="inline-block cursor-pointer text-red-400 border-1 rounded-md px-3 py-1" @click="deleteGame(element.game_name)">X</b></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        <div v-if="fileValid()" class="mt-4 p-6 w-full align-top inline-block">
+        <div v-if="fileValid()" class="p-6 w-200 align-top inline-block border-1 border-gray-700 p-2">
             <input @click="download()" type="submit" class="bg-blue-800 p-4 px-8 br-1 rounded-md text-lg cursor-pointer" value="Download" />
         </div>
         <div class="p-6 align-top">
