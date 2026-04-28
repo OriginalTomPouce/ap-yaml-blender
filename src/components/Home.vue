@@ -94,7 +94,8 @@
             probability: function (num) {
                 var total = 0;
                 for (var x = 0; x < this.games.length; x++) {
-                    total += this.games[x].weight;
+                    if (this.games[x].weight >= 0)
+                        total += this.games[x].weight;
                 }
                 if (!total)
                     total = 1;
@@ -141,7 +142,7 @@
                 this.name = this.yaml_name;
                 for (var x = 0; x < this.games.length; x++) {
                     // Safety
-                    if (!this.games[x].weight)
+                    if (!this.games[x].weight || this.games[x].weight < 0)
                         this.games[x].weight = 0;
 
                     this.masterFile.game[this.games[x].game_name] = this.games[x].weight; 
@@ -190,7 +191,7 @@
                         return;
                     }
                 }
-                this.masterFile.triggers.push({ 'option_name': 'game', 'option_result': game, 'options': { 'null' : { 'name': name } } });
+                this.masterFile.triggers.push({ 'option_name': 'game', 'option_result': game, 'options': { '' : { 'name': name } } });
                 console.log(this.masterFile.triggers);
 
             },
