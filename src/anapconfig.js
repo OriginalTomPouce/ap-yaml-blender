@@ -5,10 +5,9 @@ var ANAP_CONFIG = {
     REFRESH_TIMER_BIG: 30000,
     MEDIUM_WORLD_THRESHOLD: 100,
     BIG_WORLD_THRESHOLD: 300,
-    APP_VERSION: '0.2',
+    APP_VERSION: '0.2.1',
     SETTINGS_VERSION: '2',
     OFFLINE: false,
-    URL_WEBSITE: 'https://tomagueri.fr/anaptracker',
 };
 
 export default ANAP_CONFIG;
