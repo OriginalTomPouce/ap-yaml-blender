@@ -144,6 +144,8 @@
                     // Safety
                     if (!this.games[x].weight || this.games[x].weight < 0)
                         this.games[x].weight = 0;
+                    if (this.games[x].weight > 1000)
+                        this.games[x].weight = 1000;
 
                     this.masterFile.game[this.games[x].game_name] = this.games[x].weight; 
                     this.addTriggerGameName(this.games[x].game_name, this.games[x].slot_name);
